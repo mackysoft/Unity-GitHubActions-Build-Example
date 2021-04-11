@@ -11,6 +11,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        projectPath:
+          - .
+        unityVersion:
+          - 2020.3.1f1
         targetPlatform:
           - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
           - StandaloneWindows # Build a Windows standalone.
@@ -42,8 +46,15 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          unityVersion: 2020.3.1f1
+          projectPath: ${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
+          #androidAppBundle: true
+          #androidKeystoreName: user.keystore
+          #androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          #androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          #androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
+          #androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
 
       # Upload Build
       - name: Upload Build
